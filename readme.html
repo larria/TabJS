@@ -1,0 +1,128 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><link href='http://news.sina.com.cn/268/2014/1203/markfx.css' rel='stylesheet' type='text/css'><title>readme</title></head><body><article class="markdown-body"><h1 id="tab-v09-beta-doc"><a name="user-content-tab-v09-beta-doc" href="#tab-v09-beta-doc" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Tab v0.9 beta Doc</h1>
+<h3 id="features"><a name="user-content-features" href="#features" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Features 特性</h3>
+<ul>
+<li>包含前舌签控件（SubShowClass）的全部基础功能。</li>
+<li>增加渲染完成，激活前、后等三个定制回调。</li>
+<li>强调灵活性和可维护性：增加对触屏的滑动响应；支持定制切换函数等以支持复杂的RIA需求。</li>
+</ul>
+<h3 id="_1"><a name="user-content-_1" href="#_1" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>构造参数</h3>
+<ul>
+<li>
+<p>config (Object)：配置对象，包含以下参数(带有“*”标识为必选)：</p>
+</li>
+<li>
+<p>bonds (Array)：绑定tab与相关dom，复杂数组格式，每组一对，可传入dom或id字符串。</p>
+</li>
+<li>selected (String)：可修改激活项所绑定的内容容器的className，默认值&rsquo;tab_selected&rsquo;。</li>
+<li>startOn (Number)：可修改起始激活项序号，默认值0。</li>
+<li>auto (Boolean|Number)：设置自动播放，可传入布尔值或间隔秒数；默认值false；如传入true，间隔秒数默认值5。</li>
+<li>trigger (String)：激活触发事件，默认值&rsquo;mouseover&rsquo;，可选值：&rsquo;click&rsquo;, &lsquo;mousedown&rsquo;等。</li>
+<li>touchDir (Boolean|String)：选择采用触屏滑动切换，可传入布尔值或字符串&rsquo;v&rsquo;（竖直）及&rsquo;h&rsquo;（水平）；默认值&rsquo;v&rsquo;；如传入true，滑动切换方向默认值&rsquo;h&rsquo;。</li>
+<li>customSelect (Fuction)：自定义切换函数，this指向控件实例自身。</li>
+</ul>
+<p><strong>以下是回调部分</strong><br />
+* config (Object):</p>
+<ul>
+<li>onRender ()：控件渲染完毕，this指向控件实例自身，下同。</li>
+<li>onBefore ()：每次切换激活项之前执行。</li>
+<li>onAfter ()：每次切换激活项之后执行。</li>
+</ul>
+<h3 id="_2"><a name="user-content-_2" href="#_2" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>公有方法</h3>
+<p><strong>select(index[, onceCallback])</strong></p>
+<p>(Avoid)：手动切换至指定序号的项。</p>
+<p>参数</p>
+<ul>
+<li>index (Number): 所切换的指定序号。</li>
+<li>onceCallback (Function): 可选参数，本次切换后执行的回调，仅在当次切换时执行一次</li>
+</ul>
+<p><strong>prev()</strong></p>
+<p>(Avoid)：手动切换至当前项的前一项。</p>
+<p><strong>next()</strong></p>
+<p>(Avoid)：手动切换至当前项的后一项。</p>
+<p>.. order(orderList)</p>
+<p>..   (Avoid)：手动调整选项的依次激活次序，将改变select、prev、next、autoPlay的表现。</p>
+<p>.. 参数</p>
+<p>.. * orderList (Array): 新的选项卡序号，如[1, 2, 0]。</p>
+<p><strong>autoPlay(auto)</strong></p>
+<p>(Avoid)：设置自动播放。</p>
+<p>参数</p>
+<ul>
+<li>auto (Boolean|Number): 可为布尔值或自动播放间隔秒数，传入false将暂停自动播放；如传入true，自动播放间隔秒数默认值5（s）。</li>
+</ul>
+<p><strong>enable(isEnbale)</strong></p>
+<p>(Avoid)：暂时禁用选项卡功能。</p>
+<p>参数</p>
+<ul>
+<li>isEnbale (Boolean): 是否禁用选项卡功能。</li>
+</ul>
+<h3 id="examples"><a name="user-content-examples" href="#examples" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Examples 示例</h3>
+<p><a href="index.html">demo</a></p>
+<p><a href="index.html#demo1">最小实例</a></p>
+<pre><code class="javascript">var tab0 = new Tab({
+    bonds: [
+        ['tab0_0', 'tab0_c0'],
+        ['tab0_1', 'tab0_c1'],
+        ['tab0_2', 'tab0_c2']
+    ]
+});
+</code></pre>
+
+<p><a href="index.html#demo2">配置选项及使用控件方法</a></p>
+<pre><code class="javascript">var tab1 = new Tab({
+    bonds: [
+        ['tab1_0', 'tab1_c0'],
+        ['tab1_1', 'tab1_c1'],
+        ['tab1_2', 'tab1_c2']
+    ], // 绑定dom，复杂数组格式，每组一对
+    selected: 'tab_selected', // 选择项的className，默认值&quot;tab_selected&quot;
+    startOn: 2, // 初始项，默认值0
+    auto: 2, // 自动播放，可传入布尔值或间隔秒数，如传入true，间隔秒数默认为5
+    trigger: 'mouseover', // 触发条件，默认值&quot;mouseover&quot;
+    touchDir : 'v', // 触屏滑动切换，可传入布尔值或字符串'v'（竖直）及'h'（水平）；如不传或传入true，滑动切换方向默认为'h'
+    customSelect : null, // 自定义切换函数
+    onRender: function() {},
+    onBefore: function(to) {
+        this.doms.conts[to].innerHTML = '切换至第' + to + '项前';
+    },
+    onAfter: function(to) {
+        var me = this;
+        setTimeout(function () {
+            me.doms.conts[to].innerHTML = '切换至第' + to + '项后';
+        }, 500);
+    }
+});
+</code></pre>
+
+<p><a href="index.html#demo3">手动绑定tab值对</a></p>
+<pre><code class="javascript">var tab2 = new Tab();
+tab2.add('tab2_0', 'tab2_c0');
+tab2.add('tab2_1', 'tab2_c1');
+tab2.add('tab2_2', 'tab2_c2');
+</code></pre>
+
+<p><a href="index.html#demo4">定制切换函数</a></p>
+<pre><code class="javascript">var tab3 = new Tab({
+    bonds: [
+        ['tab3_0', 'tab3_c0'],
+        ['tab3_1', 'tab3_c1'],
+        ['tab3_2', 'tab3_c2'],
+        ['tab3_3', 'tab3_c3'],
+        ['tab3_4', 'tab3_c4']
+    ],
+    trigger : 'click',
+    auto : 6,
+    customSelect : function (i) {
+        var s = this.states;
+        for(var j = 0; j &lt; s.total; j ++){
+            if(i == j){
+                this.doms.conts[i].style.display = 'block';
+                this._addClass(this.doms.conts[i], 'expandOpen');
+            }
+            else{
+                this.doms.conts[j].style.display = 'none';
+                this._removeClass(this.doms.conts[j], 'expandOpen');
+            }
+        }
+    } // 自定义切换函数
+});
+</code></pre></article><link rel="stylesheet" href="http://news.sina.com.cn/268/2014/1210/monokai_sublime.css"><script src="http://news.sina.com.cn/268/2014/1210/highlight.pack.js"></script><script>hljs.initHighlightingOnLoad();</script></body></html>
