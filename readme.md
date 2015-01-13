@@ -1,4 +1,4 @@
-# Tab v0.9 beta Doc
+# Tab v0.9 beta
 
 ### Features 特性
 
